@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="sq">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rikonstruktimi i Urës së Bunës – Nova Strucure</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy: #2d4a6e; --steel: #3e6491; --sky: #6fa3c8;
+  --pale: #e8f1f8; --white: #ffffff; --gold: #c9a84c;
+  --dark: #1a2f45; --mid: #4a6580; --light: #f4f7fa;
+  --border: rgba(45,74,110,0.12);
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body { font-family:'DM Sans',sans-serif; background:var(--white); color:var(--dark); overflow-x:hidden; }
+ 
+nav {
+  position:fixed; top:0; left:0; right:0; z-index:200;
+  background:rgba(255,255,255,0.96); backdrop-filter:blur(14px);
+  border-bottom:1px solid var(--border);
+  height:58px; padding:0 2rem;
+  display:flex; align-items:center; justify-content:space-between;
+}
+.nav-logo { font-family:'Playfair Display',serif; font-weight:700; font-size:1rem; color:var(--navy); text-decoration:none; }
+.nav-logo span { color:var(--gold); }
+.nav-links { display:flex; gap:1.5rem; list-style:none; }
+.nav-links a { text-decoration:none; color:var(--mid); font-size:0.78rem; font-weight:500; letter-spacing:0.06em; text-transform:uppercase; transition:color 0.2s; }
+.nav-links a:hover { color:var(--navy); }
+ 
+/* HERO */
+.hero {
+  min-height:90vh;
+  background:linear-gradient(150deg, var(--dark) 0%, var(--navy) 50%, var(--steel) 100%);
+  display:flex; flex-direction:column; align-items:center; justify-content:center;
+  text-align:center; padding:7rem 2rem 4rem; position:relative; overflow:hidden;
+}
+.hero::before {
+  content:''; position:absolute; inset:0;
+  background-image:repeating-linear-gradient(0deg,transparent,transparent 59px,rgba(255,255,255,0.02) 60px),
+                   repeating-linear-gradient(90deg,transparent,transparent 59px,rgba(255,255,255,0.02) 60px);
+}
+.hero-badge {
+  background:rgba(201,168,76,0.18); border:1px solid rgba(201,168,76,0.4);
+  color:var(--gold); padding:0.4rem 1.2rem; border-radius:100px;
+  font-size:0.72rem; font-weight:600; letter-spacing:0.12em; text-transform:uppercase;
+  margin-bottom:1.5rem; position:relative; animation:fadeUp 0.7s ease both;
+}
+.hero h1 {
+  font-family:'Playfair Display',serif;
+  font-size:clamp(2.4rem,7vw,5rem); font-weight:900;
+  color:var(--white); line-height:1.05; margin-bottom:0.4rem;
+  position:relative; animation:fadeUp 0.7s 0.1s ease both;
+}
+.hero h1 em { font-style:normal; color:var(--gold); }
+.hero h2 {
+  font-family:'Playfair Display',serif;
+  font-size:clamp(1.2rem,3vw,2.2rem); font-weight:700;
+  color:rgba(255,255,255,0.65); margin-bottom:1.8rem;
+  position:relative; animation:fadeUp 0.7s 0.2s ease both;
+}
+.hero-stats {
+  display:flex; gap:2.5rem; justify-content:center; flex-wrap:wrap;
+  position:relative; animation:fadeUp 0.7s 0.3s ease both;
+}
+.stat { text-align:center; }
+.stat-num { font-family:'Playfair Display',serif; font-size:2.2rem; font-weight:900; color:var(--gold); line-height:1; }
+.stat-label { font-size:0.7rem; color:rgba(255,255,255,0.4); text-transform:uppercase; letter-spacing:0.08em; margin-top:0.25rem; }
+ 
+/* SHARED */
+section { padding:4.5rem 2rem; }
+.container { max-width:1050px; margin:0 auto; }
+.section-label { font-size:0.7rem; font-weight:600; letter-spacing:0.14em; text-transform:uppercase; color:var(--gold); margin-bottom:0.5rem; }
+.section-title { font-family:'Playfair Display',serif; font-size:clamp(1.6rem,3.5vw,2.4rem); font-weight:900; color:var(--navy); line-height:1.1; margin-bottom:0.8rem; }
+.divider { width:40px; height:3px; background:var(--gold); border-radius:2px; margin:1.2rem 0; }
+.formula-box {
+  background:linear-gradient(135deg, var(--navy), var(--steel));
+  border-radius:10px; padding:0.9rem 1.1rem; margin:0.7rem 0;
+  font-family:monospace; font-size:0.85rem; color:var(--gold); line-height:1.65;
+}
+ 
+/* QËLLIMI */
+.qellimi { background:var(--light); }
+.goals-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(175px,1fr)); gap:1rem; margin-top:2.5rem; }
+.goal-card {
+  background:var(--white); border:1px solid var(--border); border-radius:12px;
+  padding:1.4rem 1.2rem; position:relative; overflow:hidden;
+  transition:transform 0.25s, box-shadow 0.25s;
+}
+.goal-card:hover { transform:translateY(-4px); box-shadow:0 10px 28px rgba(45,74,110,0.1); }
+.goal-card::before { content:''; position:absolute; top:0; left:0; right:0; height:3px; background:linear-gradient(90deg,var(--navy),var(--sky)); }
+.goal-icon { font-size:1.6rem; margin-bottom:0.6rem; }
+.goal-card h3 { font-family:'Playfair Display',serif; font-size:0.95rem; font-weight:700; color:var(--navy); margin-bottom:0.3rem; }
+.goal-card p { font-size:0.81rem; color:var(--mid); line-height:1.55; }
+ 
+/* URA + FORCES combined */
+.two-col { display:grid; grid-template-columns:1fr 1fr; gap:2.5rem; margin-top:2.5rem; align-items:start; }
+.info-list { list-style:none; }
+.info-list li { display:flex; align-items:flex-start; gap:0.8rem; padding:0.9rem 0; border-bottom:1px solid var(--border); }
+.info-list li:last-child { border-bottom:none; }
+.info-dot { width:7px; height:7px; border-radius:50%; background:var(--gold); margin-top:6px; flex-shrink:0; }
+.info-list strong { display:block; font-size:0.74rem; text-transform:uppercase; letter-spacing:0.07em; color:var(--navy); font-weight:600; margin-bottom:0.15rem; }
+.info-list span { font-size:0.87rem; color:var(--mid); line-height:1.5; }
+.damage-box { background:linear-gradient(135deg,var(--navy),var(--steel)); border-radius:16px; padding:2rem; color:white; }
+.damage-box h3 { font-family:'Playfair Display',serif; font-size:1.15rem; font-weight:700; margin-bottom:1.2rem; color:var(--gold); }
+.damage-item { display:flex; gap:0.75rem; margin-bottom:0.9rem; font-size:0.84rem; line-height:1.55; color:rgba(255,255,255,0.8); }
+.damage-item:last-child { margin-bottom:0; }
+ 
+/* FORCES */
+.forces { background:var(--light); }
+.forces-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(210px,1fr)); gap:1.1rem; margin-top:2.5rem; }
+.force-card { background:var(--white); border-radius:14px; padding:1.6rem 1.4rem; border:1px solid var(--border); transition:transform 0.25s; }
+.force-card:hover { transform:translateY(-4px); box-shadow:0 10px 28px rgba(45,74,110,0.1); }
+.force-letter { font-family:'Playfair Display',serif; font-size:2.6rem; font-weight:900; color:var(--pale); line-height:1; margin-bottom:0.4rem; }
+.force-card h3 { font-size:0.9rem; font-weight:600; color:var(--navy); margin-bottom:0.3rem; }
+.force-card .val { font-family:'Playfair Display',serif; font-size:1.25rem; font-weight:700; color:var(--gold); margin-bottom:0.4rem; }
+.force-card p { font-size:0.81rem; color:var(--mid); line-height:1.55; }
+ 
+/* MATEMATIKA */
+.math-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(250px,1fr)); gap:1.2rem; margin-top:2.5rem; }
+.math-card { background:var(--white); border:1px solid var(--border); border-radius:14px; padding:1.5rem; transition:transform 0.25s; }
+.math-card:hover { transform:translateY(-3px); box-shadow:0 8px 24px rgba(45,74,110,0.09); }
+.math-card h3 { font-family:'Playfair Display',serif; font-size:0.95rem; font-weight:700; color:var(--navy); margin-bottom:0.8rem; }
+.math-card p { font-size:0.81rem; color:var(--mid); line-height:1.55; }
+ 
+/* KOSTOT */
+.costs { background:var(--light); }
+.cost-table { width:100%; border-collapse:collapse; }
+.cost-table th { text-align:left; font-size:0.71rem; text-transform:uppercase; letter-spacing:0.08em; color:var(--mid); padding:0.5rem 0; border-bottom:2px solid var(--navy); }
+.cost-table td { padding:0.8rem 0; border-bottom:1px solid var(--border); font-size:0.88rem; color:var(--dark); }
+.cost-table td:last-child { text-align:right; font-weight:600; color:var(--navy); }
+.cost-table tr.total td { font-family:'Playfair Display',serif; font-size:1.05rem; font-weight:700; color:var(--navy); border-top:2px solid var(--navy); border-bottom:none; padding-top:1rem; }
+.cost-table tr.total td:last-child { color:var(--gold); }
+.maint-box { background:var(--navy); border-radius:16px; padding:2rem; color:white; }
+.maint-box h3 { font-family:'Playfair Display',serif; font-size:1.1rem; color:var(--gold); margin-bottom:1.2rem; }
+.maint-item { display:flex; justify-content:space-between; padding:0.6rem 0; border-bottom:1px solid rgba(255,255,255,0.1); font-size:0.85rem; }
+.maint-item:last-child { border-bottom:none; font-weight:700; }
+.maint-item span:first-child { color:rgba(255,255,255,0.6); }
+.maint-item span:last-child { color:var(--gold); font-weight:600; }
+ 
+/* TURIZMI */
+.tourism { background:linear-gradient(150deg,var(--dark),var(--navy)); color:white; }
+.tourism .section-title { color:white; }
+.tourism .divider { background:var(--gold); }
+.t-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(170px,1fr)); gap:1rem; margin-top:2.5rem; }
+.t-card { background:rgba(255,255,255,0.07); border:1px solid rgba(255,255,255,0.1); border-radius:14px; padding:1.5rem 1.2rem; transition:background 0.25s; }
+.t-card:hover { background:rgba(255,255,255,0.12); }
+.t-icon { font-size:1.8rem; margin-bottom:0.8rem; }
+.t-card h3 { font-family:'Playfair Display',serif; font-size:0.95rem; font-weight:700; color:var(--gold); margin-bottom:0.4rem; }
+.t-card p { font-size:0.8rem; color:rgba(255,255,255,0.58); line-height:1.55; }
+ 
+/* EKIPI */
+.ekipi { background:var(--light); }
+.team-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(175px,1fr)); gap:1rem; margin-top:2.5rem; }
+.team-card {
+  background:var(--white); border:1px solid var(--border); border-radius:14px;
+  padding:1.5rem 1.2rem; text-align:center; cursor:pointer;
+  transition:transform 0.25s, box-shadow 0.25s, border-color 0.25s;
+}
+.team-card:hover { transform:translateY(-4px); box-shadow:0 12px 32px rgba(45,74,110,0.12); border-color:var(--sky); }
+.avatar { width:56px; height:56px; border-radius:50%; background:linear-gradient(135deg,var(--navy),var(--sky)); display:flex; align-items:center; justify-content:center; font-family:'Playfair Display',serif; font-size:1.2rem; font-weight:700; color:white; margin:0 auto 0.8rem; }
+.team-card h3 { font-family:'Playfair Display',serif; font-size:0.9rem; font-weight:700; color:var(--navy); margin-bottom:0.25rem; }
+.team-card .role { font-size:0.7rem; color:var(--gold); font-weight:600; text-transform:uppercase; letter-spacing:0.07em; margin-bottom:0.5rem; }
+.team-card .topic { font-size:0.75rem; color:var(--mid); line-height:1.45; }
+ 
+/* MODAL */
+.modal-overlay {
+  position:fixed; inset:0; background:rgba(26,47,69,0.78);
+  backdrop-filter:blur(8px); z-index:1000;
+  display:flex; align-items:center; justify-content:center; padding:1.5rem;
+  opacity:0; pointer-events:none; transition:opacity 0.3s;
+}
+.modal-overlay.open { opacity:1; pointer-events:all; }
+.modal {
+  background:var(--white); border-radius:20px; max-width:460px; width:100%;
+  padding:2.2rem; position:relative;
+  transform:translateY(20px); transition:transform 0.3s;
+  box-shadow:0 40px 80px rgba(26,47,69,0.3);
+}
+.modal-overlay.open .modal { transform:translateY(0); }
+.modal-close { position:absolute; top:1.1rem; right:1.3rem; background:none; border:none; font-size:1.2rem; color:var(--mid); cursor:pointer; width:30px; height:30px; border-radius:50%; display:flex; align-items:center; justify-content:center; transition:background 0.2s; }
+.modal-close:hover { background:var(--light); }
+.modal-avatar { width:64px; height:64px; border-radius:50%; background:linear-gradient(135deg,var(--navy),var(--sky)); display:flex; align-items:center; justify-content:center; font-family:'Playfair Display',serif; font-size:1.5rem; font-weight:700; color:white; margin-bottom:1rem; }
+.modal h2 { font-family:'Playfair Display',serif; font-size:1.4rem; font-weight:900; color:var(--navy); margin-bottom:0.2rem; }
+.modal .m-role { font-size:0.74rem; font-weight:600; text-transform:uppercase; letter-spacing:0.1em; color:var(--gold); margin-bottom:1rem; }
+.modal-divider { height:1px; background:var(--border); margin:1rem 0; }
+.modal-section h4 { font-size:0.7rem; text-transform:uppercase; letter-spacing:0.1em; color:var(--mid); font-weight:600; margin-bottom:0.5rem; }
+.modal-section p { font-size:0.88rem; color:var(--dark); line-height:1.65; }
+.modal-topics { display:flex; flex-wrap:wrap; gap:0.4rem; margin-top:0.5rem; }
+.topic-tag { background:var(--pale); color:var(--navy); border-radius:100px; padding:0.25rem 0.8rem; font-size:0.73rem; font-weight:500; }
+ 
+footer { background:var(--dark); color:rgba(255,255,255,0.4); text-align:center; padding:2rem; font-size:0.8rem; line-height:1.9; }
+footer strong { color:var(--gold); }
+ 
+@keyframes fadeUp { from { opacity:0; transform:translateY(20px); } to { opacity:1; transform:translateY(0); } }
+.reveal { opacity:0; transform:translateY(20px); transition:opacity 0.6s ease, transform 0.6s ease; }
+.reveal.visible { opacity:1; transform:translateY(0); }
+ 
+@media (max-width:768px) {
+  .nav-links { display:none; }
+  .two-col { grid-template-columns:1fr; gap:1.8rem; }
+}
+</style>
+</head>
+<body>
+ 
+<nav>
+  <a class="nav-logo" href="#hero">Nova <span>Strucure</span></a>
+  <ul class="nav-links">
+    <li><a href="#qellimi">Qëllimi</a></li>
+    <li><a href="#ura">Ura</a></li>
+    <li><a href="#matematika">Matematika</a></li>
+    <li><a href="#kostot">Kostot</a></li>
+    <li><a href="#turizmi">Turizmi</a></li>
+    <li><a href="#ekipi">Ekipi</a></li>
+  </ul>
+</nav>
+ 
+<!-- HERO -->
+<section class="hero" id="hero">
+  <div class="hero-badge">Projekt Matematike · Nova Strucure</div>
+  <h1>Rikonstruktimi i<br><em>Urës së Bunës</em></h1>
+  <h2>Matematika takon Arkitekturën</h2>
+  <div class="hero-stats">
+    <div class="stat"><div class="stat-num">120m</div><div class="stat-label">Gjatësia</div></div>
+    <div class="stat"><div class="stat-num">480m²</div><div class="stat-label">Sipërfaqja</div></div>
+    <div class="stat"><div class="stat-num">~100t</div><div class="stat-label">Pesha</div></div>
+    <div class="stat"><div class="stat-num">31,360€</div><div class="stat-label">Kosto Totale</div></div>
+  </div>
+</section>
+ 
+<!-- QËLLIMI -->
+<section class="qellimi" id="qellimi">
+  <div class="container">
+    <div class="reveal">
+      <div class="section-label">Qëllimi i Projektit</div>
+      <h2 class="section-title">Pse e kemi zgjedhur këtë projekt?</h2>
+      <div class="divider"></div>
+    </div>
+    <div class="goals-grid">
+      <div class="goal-card reveal"><div class="goal-icon">🔍</div><h3>Analizë e Gjendjes</h3><p>Inspektim i gjendjes aktuale dhe identifikimi i dëmtimeve strukturore.</p></div>
+      <div class="goal-card reveal"><div class="goal-icon">📐</div><h3>Matematika në Praktikë</h3><p>Llogaritje të sipërfaqes, vëllimit dhe forcave me formula reale.</p></div>
+      <div class="goal-card reveal"><div class="goal-icon">🔧</div><h3>Propozim Rikonstruksioni</h3><p>Zgjidhje me dru lisi dhe çelik galvanizuar.</p></div>
+      <div class="goal-card reveal"><div class="goal-icon">🛡️</div><h3>Siguri & Qëndrueshmëri</h3><p>Koeficient sigurie 1.5–2x mbi ngarkesën reale.</p></div>
+      <div class="goal-card reveal"><div class="goal-icon">🏛️</div><h3>Ndikim në Turizëm</h3><p>Ndriçim modern për +20–30% vizitorë.</p></div>
+    </div>
+  </div>
+</section>
+ 
+<!-- URA -->
+<section id="ura">
+  <div class="container">
+    <div class="reveal">
+      <div class="section-label">Përshkrimi Aktual</div>
+      <h2 class="section-title">Ura e Bunës – Si është sot?</h2>
+      <div class="divider"></div>
+    </div>
+    <div class="two-col">
+      <div class="reveal">
+        <ul class="info-list">
+          <li><div class="info-dot"></div><div><strong>Gjatësia</strong><span>120 metra mbi lumin Buna</span></div></li>
+          <li><div class="info-dot"></div><div><strong>Gjerësia</strong><span>4 metra – për këmbësorë dhe mjete të vogla</span></div></li>
+          <li><div class="info-dot"></div><div><strong>Tipi</strong><span>Kombinim metal + dru</span></div></li>
+          <li><div class="info-dot"></div><div><strong>Sipërfaqja Totale</strong><span>120 × 4 = <strong>480 m²</strong></span></div></li>
+        </ul>
+      </div>
+      <div class="reveal">
+        <div class="damage-box">
+          <h3>⚠️ Problemet Aktuale</h3>
+          <div class="damage-item">🌧️ Konsumim nga shi, lagështirë dhe temperatura.</div>
+          <div class="damage-item">🔩 Ndryshkje metalike dhe konsum i drurit.</div>
+          <div class="damage-item">⚡ Dobësim strukturor dhe rrezik për përdoruesit.</div>
+          <div class="damage-item">📉 Imazh negativ turistik i zonës.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+ 
+<!-- FORCAT -->
+<section class="forces" id="forcat">
+  <div class="container">
+    <div class="reveal">
+      <div class="section-label">Analizë Teknike</div>
+      <h2 class="section-title">Forcat që Ndikojnë në Urë</h2>
+      <div class="divider"></div>
+    </div>
+    <div class="forces-grid">
+      <div class="force-card reveal"><div class="force-letter">A</div><h3>Forca e Shtypjes</h3><div class="val">20–35 ton</div><p>Transferon peshën nga ura në tokë nëpërmjet mbështetëseve.</p></div>
+      <div class="force-card reveal"><div class="force-letter">B</div><h3>Forca e Tërheqjes</h3><div class="val">150–300 kN</div><p>Vepron në trarë metalikë, mban strukturën nga shembja.</p></div>
+      <div class="force-card reveal"><div class="force-letter">C</div><h3>Forca e Përkuljes</h3><div class="val">~100 ton</div><p>Shfaqet në mes të urës; rreziku: deformim i drurit.</p></div>
+      <div class="force-card reveal"><div class="force-letter">D</div><h3>Forcat Anësore</h3><div class="val">200–600 N/m²</div><p>Era me 10–20 m/s shkakton lëkundje dhe stres shtesë.</p></div>
+    </div>
+    <div style="margin-top:2rem; display:grid; grid-template-columns:1fr 1fr; gap:1.5rem;" class="reveal">
+      <div><p style="font-size:0.84rem;color:var(--mid);margin-bottom:0.5rem;"><strong style="color:var(--navy);">Pesha e Urës (struktura)</strong></p><div class="formula-box">480 m² × 180 kg/m² ≈ <strong>86,400 kg ≈ 85–100 ton</strong></div></div>
+      <div><p style="font-size:0.84rem;color:var(--mid);margin-bottom:0.5rem;"><strong style="color:var(--navy);">Ngarkesa nga Përdoruesit</strong></p><div class="formula-box">180 × 70 kg + mjete = <strong>15–20 ton maksimum</strong></div></div>
+    </div>
+  </div>
+</section>
+ 
+<!-- MATEMATIKA -->
+<section id="matematika">
+  <div class="container">
+    <div class="reveal">
+      <div class="section-label">Modelimi Gjeometrik</div>
+      <h2 class="section-title">Llogaritjet Matematikore</h2>
+      <div class="divider"></div>
+    </div>
+    <div class="math-grid">
+      <div class="math-card reveal">
+        <h3>📏 Sipërfaqja e Urës</h3>
+        <div class="formula-box">S = 120 × 4 = <strong>480 m²</strong></div>
+        <p>Lejon 150–200 persona praktikisht (për siguri).</p>
+      </div>
+      <div class="math-card reveal">
+        <h3>📦 Kuboidi – Dërrasa</h3>
+        <div class="formula-box">V = 2 × 0.2 × 0.05 = <strong>0.02 m³</strong></div>
+        <p>Nevojiten <strong>3,025 dërrasa</strong> lisi (+ 10% rezervë).</p>
+      </div>
+      <div class="math-card reveal">
+        <h3>🔵 Cilindri – Trungu i Bulonit</h3>
+        <div class="formula-box">V = π × 0.5² × 9 = <strong>7.09 cm³</strong><br>V total buloni = <strong>15.435 cm³</strong></div>
+        <p>Masa/bulon: 120.39 g · Gjithsej 4,000 bulona = <strong>481.57 kg</strong></p>
+      </div>
+      <div class="math-card reveal">
+        <h3>⚾ Sfera – Koka e Përçinës</h3>
+        <div class="formula-box">V = 4/3 × π × 2³ + π×0.6²×4<br>= <strong>38.02 cm³</strong></div>
+        <p>2,000 përçina · 70 lek/copë = <strong>140,000 lek</strong></p>
+      </div>
+      <div class="math-card reveal">
+        <h3>💡 Sistemi LED</h3>
+        <div class="formula-box">50 drita × 60W = 3 kW<br>E = 3kW × 10h/ditë = <strong>30 kWh/ditë</strong><br>Kosto vjetore: <strong>1,314 €</strong></div>
+        <p>Instalim: 7,500 € · 25 majtas + 25 djathtas, çdo 10 m.</p>
+      </div>
+      <div class="math-card reveal">
+        <h3>🌲 Druri i Lisit</h3>
+        <div class="formula-box">1,100 m² ÷ 0.4 m²/dërrasë = 2,750<br>+ 10% rezervë = <strong>3,025 dërrasa</strong><br>Gozhda: 11,000 × 0.02€ = <strong>220 €</strong></div>
+        <p>Densitet: ~700–750 kg/m³. 30–40% më rezistent se pisha.</p>
+      </div>
+    </div>
+  </div>
+</section>
+ 
+<!-- KOSTOT -->
+<section class="costs" id="kostot">
+  <div class="container">
+    <div class="reveal">
+      <div class="section-label">Vlerësimi Ekonomik</div>
+      <h2 class="section-title">Kostot Totale</h2>
+      <div class="divider"></div>
+    </div>
+    <div class="two-col">
+      <div class="reveal">
+        <table class="cost-table">
+          <thead><tr><th>Zëri</th><th>Detajet</th><th>Kostoja</th></tr></thead>
+          <tbody>
+            <tr><td>🪵 Drasat e lisit</td><td>2,750 × 10€</td><td>27,500 €</td></tr>
+            <tr><td>🔨 Gozhdat</td><td>11,000 × 0.02€</td><td>220 €</td></tr>
+            <tr><td>💡 Drita LED</td><td>28 × 50€</td><td>1,400 €</td></tr>
+            <tr><td>🏗️ Shtylla ndriçimi</td><td>28 × 80€</td><td>2,240 €</td></tr>
+            <tr class="total"><td colspan="2"><strong>TOTALI</strong></td><td>31,360 €</td></tr>
+          </tbody>
+        </table>
+        <div style="margin-top:1.2rem;background:var(--pale);border-radius:10px;padding:1.2rem;font-size:0.85rem;color:var(--dark);">
+          <p style="font-size:0.72rem;color:var(--mid);text-transform:uppercase;letter-spacing:0.08em;font-weight:600;margin-bottom:0.5rem;">Bulona + Përçina (Lek)</p>
+          <p>4,000 bulona × 300 lek = 1,200,000 lek</p>
+          <p>2,000 përçina × 70 lek = 140,000 lek</p>
+          <p style="font-weight:700;color:var(--navy);margin-top:0.4rem;">Totali: <span style="color:var(--gold);">1,340,000 lek</span></p>
+        </div>
+      </div>
+      <div class="reveal">
+        <div class="maint-box">
+          <h3>🔧 Mirëmbajtja Vjetore</h3>
+          <div class="maint-item"><span>Kontroll teknik</span><span>300–700 €</span></div>
+          <div class="maint-item"><span>Lyerje dhe mbrojtje</span><span>1,000–2,500 €</span></div>
+          <div class="maint-item"><span>Riparime të vogla</span><span>500–1,500 €</span></div>
+          <div class="maint-item"><span>Energji elektrike</span><span>1,314 €</span></div>
+          <div class="maint-item" style="margin-top:0.7rem;padding-top:0.7rem;border-top:1px solid rgba(255,255,255,0.15);">
+            <span style="color:white;font-weight:700;">Totali Vjetor</span><span>1,800–4,700 €</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+ 
+<!-- TURIZMI -->
+<section class="tourism" id="turizmi">
+  <div class="container">
+    <div class="reveal">
+      <div class="section-label">Ndikimi i Pritur</div>
+      <h2 class="section-title">Turizmi pas Rikonstruksionit</h2>
+      <div class="divider"></div>
+    </div>
+    <div class="t-grid">
+      <div class="t-card reveal"><div class="t-icon">📈</div><h3>+20–30% Vizitorë</h3><p>Ndriçimi modern tërheq turistë dhe qytetarë gjatë mbrëmjes.</p></div>
+      <div class="t-card reveal"><div class="t-icon">⭐</div><h3>Përvojë më e Mirë</h3><p>Stola, tabela informuese dhe sipërfaqe e sigurt.</p></div>
+      <div class="t-card reveal"><div class="t-icon">💰</div><h3>Ekonomia Lokale</h3><p>Rritja e turizmit nxit bizneset lokale.</p></div>
+      <div class="t-card reveal"><div class="t-icon">🏛️</div><h3>Ruajtje Monumenti</h3><p>Mirëmbajtja rregullte ruan vlerën historike.</p></div>
+      <div class="t-card reveal"><div class="t-icon">🌿</div><h3>Turizëm i Qëndrueshëm</h3><p>Materiale rezistente dhe LED ekonomik.</p></div>
+    </div>
+  </div>
+</section>
+ 
+<!-- EKIPI -->
+<section class="ekipi" id="ekipi">
+  <div class="container">
+    <div class="reveal">
+      <div class="section-label">Nova Strucure</div>
+      <h2 class="section-title">Ekipi ynë</h2>
+      <div class="divider"></div>
+      <p style="color:var(--mid);font-size:0.9rem;">Kliko mbi çdo anëtar për detaje.</p>
+    </div>
+    <div class="team-grid">
+      <div class="team-card reveal" onclick="openModal('ajla')"><div class="avatar">AH</div><h3>Ajla Haxhija</h3><div class="role">Menaxhere Projekti</div><div class="topic">Koordinimi i projektit</div></div>
+      <div class="team-card reveal" onclick="openModal('marsia')"><div class="avatar">MU</div><h3>Marsia Uligaj</h3><div class="role">Inxhiniere Ndërtimi</div><div class="topic">Analiza e forcave</div></div>
+      <div class="team-card reveal" onclick="openModal('rania')"><div class="avatar">RB</div><h3>Rania Boriçi</h3><div class="role">Arkitekte</div><div class="topic">Modelimi gjeometrik</div></div>
+      <div class="team-card reveal" onclick="openModal('leart')"><div class="avatar">LB</div><h3>Leart Bekteshi</h3><div class="role">Specialist Materialeve</div><div class="topic">Zgjedhja e materialeve</div></div>
+      <div class="team-card reveal" onclick="openModal('edrion')"><div class="avatar">EK</div><h3>Edrion Kuçi</h3><div class="role">Inxhinier Elektrik</div><div class="topic">Sistemi LED</div></div>
+      <div class="team-card reveal" onclick="openModal('emeli')"><div class="avatar">EB</div><h3>Emeli Bilali</h3><div class="role">Menaxhere Financiare</div><div class="topic">Kostot & buxheti</div></div>
+      <div class="team-card reveal" onclick="openModal('lisarda')"><div class="avatar">LA</div><h3>Lisarda Allçeniku</h3><div class="role">Inxhiniere Gjeometrie</div><div class="topic">Vëllimi & masa</div></div>
+    </div>
+  </div>
+</section>
+ 
+<!-- MODAL -->
+<div class="modal-overlay" id="modal" onclick="closeModalOutside(event)">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <div class="modal-avatar" id="m-avatar"></div>
+    <h2 id="m-name"></h2>
+    <div class="m-role" id="m-role"></div>
+    <div class="modal-divider"></div>
+    <div class="modal-section"><h4>Kontributi</h4><p id="m-desc"></p></div>
+    <div class="modal-divider"></div>
+    <div class="modal-section"><h4>Temat</h4><div class="modal-topics" id="m-topics"></div></div>
+  </div>
+</div>
+ 
+<footer>
+  <p><strong>Nova Strucure</strong> · Projekt Matematike · Rikonstruktimi i Urës së Bunës</p>
+  <p style="margin-top:0.4rem;font-size:0.74rem;">Ajla · Marsia · Rania · Leart · Edrion · Emeli · Lisarda</p>
+</footer>
+ 
+<script>
+const members = {
+  ajla:{initials:'AH',name:'Ajla Haxhija',role:'Menaxhere Projekti',desc:'Si menaxhere e projektit, Ajla ka koordinuar të gjithë ekipin dhe ka siguruar që secili anëtar të kontribuojë në kohë dhe me saktësi. Ajo ka mbikëqyrur procesin nga fillimi deri në prezantimin final.',topics:['Koordinimi i Ekipit','Planifikimi i Projektit','Prezantimi Final','Qëllimet e Projektit']},
+  marsia:{initials:'MU',name:'Marsia Uligaj',role:'Inxhiniere Ndërtimi',desc:'Marsia ka analizuar të gjitha forcat fizike – shtypja, tërheqja, përkulja dhe forcat anësore nga era. Ka llogaritur ngarkesën totale dhe kapacitetin mbajtës të strukturës.',topics:['Forca e Shtypjes (20–35 ton)','Forca e Tërheqjes (150–300 kN)','Forca e Përkuljes','Forcat Anësore']},
+  rania:{initials:'RB',name:'Rania Boriçi',role:'Arkitekte',desc:'Rania ka punuar në modelimin gjeometrik duke përdorur kuboidin, cilindrin, konin dhe sferën. Ka llogaritur sipërfaqen totale dhe vëllimet e elementëve strukturorë.',topics:['Sipërfaqja e Urës (480 m²)','Vëllimi i Kuboidit','Vëllimi i Cilindrit','Projektimi Gjeometrik']},
+  leart:{initials:'LB',name:'Leart Bekteshi',role:'Specialist i Materialeve',desc:'Leart ka justifikuar zgjedhjen e materialeve – druri i lisit dhe çeliku i galvanizuar. Ka analizuar trashësinë optimale të dërrasave (5–7 cm) për siguri maksimale.',topics:['Druri i Lisit (700–750 kg/m³)','Trashësia 5–7 cm','Koeficienti Sigurisë 1.5–2x','3,025 Dërrasa']},
+  edrion:{initials:'EK',name:'Edrion Kuçi',role:'Inxhinier Elektrik',desc:'Edrion ka projektuar sistemin LED – 50 drita, fuqia totale 3 kW, konsumin ditor/vjetor dhe kostot totale të instalimit (7,500€) dhe energjisë vjetore.',topics:['50 Drita LED (60W)','Fuqia Totale 3 kW','Kosto Instalimit 7,500 €','Konsumi Vjetor 10,950 kWh']},
+  emeli:{initials:'EB',name:'Emeli Bilali',role:'Menaxhere Financiare',desc:'Emeli ka llogaritur të gjitha kostot: drasat (27,500€), gozhdat (220€), bulonat (1,200,000 lek), përçinat (140,000 lek) dhe mirëmbajtjen vjetore.',topics:['Kostoja Totale 31,360 €','Bulona + Përçina 1,340,000 lek','Mirëmbajtja 1,800–4,700 €/vit','Stola & Tabela']},
+  lisarda:{initials:'LA',name:'Lisarda Allçeniku',role:'Inxhiniere Gjeometrie',desc:'Lisarda ka llogaritur vëllimet dhe masat e elementëve metalikë. Me densitetin e çelikut (7.8 g/cm³) gjeti masën e 4,000 bulonave = 481.57 kg.',topics:['Vëllimi Bulonit 15.435 cm³','Masa/Bulon 120.39 g','Masa Totale 481.57 kg','Vëllimi Përçinës 38.02 cm³']}
+};
+ 
+function openModal(id) {
+  const m = members[id];
+  document.getElementById('m-avatar').textContent = m.initials;
+  document.getElementById('m-name').textContent = m.name;
+  document.getElementById('m-role').textContent = m.role;
+  document.getElementById('m-desc').textContent = m.desc;
+  document.getElementById('m-topics').innerHTML = m.topics.map(t=>`<span class="topic-tag">${t}</span>`).join('');
+  document.getElementById('modal').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeModal() { document.getElementById('modal').classList.remove('open'); document.body.style.overflow=''; }
+function closeModalOutside(e) { if(e.target.id==='modal') closeModal(); }
+document.addEventListener('keydown', e => { if(e.key==='Escape') closeModal(); });
+ 
+const observer = new IntersectionObserver(entries => {
+  entries.forEach((entry,i) => {
+    if(entry.isIntersecting) { setTimeout(()=>entry.target.classList.add('visible'), i*60); observer.unobserve(entry.target); }
+  });
+}, { threshold:0.1 });
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
+ 
